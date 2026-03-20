@@ -1,13 +1,383 @@
 <template>
-	<view class="content">
-		首页
+	<view class="layout">
+		<!-- 安全适配区 -->
+		<safe></safe>
+		<!-- 背景 -->
+		<view class="background">
+			<!-- 头部标题 -->
+			<view class="top">
+				美妆购物平台
+			</view>
+			<!-- 搜索框及分类筛选框 -->
+			<view class="search">
+				<navigator url="">
+					<view class="left">
+						<uni-icons class="icon" type="search" size="25" color="#5756B3"></uni-icons>
+						<text>搜索</text>
+					</view>
+				</navigator>
+				<view class="right">
+					<uni-icons type="settings-filled" size="25" color="#5756B3"></uni-icons>
+				</view>
+			</view>
+			<!-- 轮播图 -->
+			<view class="banner">
+				<swiper indicator-dots indicator-color="rgba(255, 255, 255, 0.5)" indicator-active-color="#fff" circular autoplay :interval="4000" :duration="1500" @change="changeDots">
+					<swiper-item  v-for="item in bannerList" :key="item.id">
+						<image :src="item.url" mode="aspectFill" />
+					</swiper-item>
+				</swiper>
+			</view>
+		</view>
+		<!-- 美妆分类 -->
+		<view class="classify">
+			<view class="list">
+			  <view class="items" v-for="item in classifyList" :key="item.id">
+				<view class="img">
+				  <image :src="item.url" mode="aspectFill"></image>
+				</view>
+				<text class="text">{{ item.text }}</text>
+			  </view>
+			</view>
+		</view>
+		<!-- 图片广告 -->
+		<view class="pic">
+			<image src="../../static/banner/banner1.png" mode="aspectFill"></image>
+		</view>
+		<!-- 热卖爆品 -->
+		<view class="hot">
+			<view class="left">
+				<uni-icons type="fire" size="25" color="#5756B3"></uni-icons>
+				<text class="title">热卖爆品</text>
+			</view>
+			<view class="right">
+				<text class="more">更多</text>
+				<uni-icons type="right" size="10" color="#B3B3B3"></uni-icons>
+			</view>
+		</view>
+		<!-- 商品 -->
+		<view class="product">
+			<view class="items" v-for="item  in classifyList" :key="item.id">
+				<image :src="item.url" mode="aspectFill"></image>
+				<view class="description">{{item.description}}</view>
+				<view class="price">￥{{item.price}}</view>
+				<view class="onsell">月销 {{item.sell}}</view>
+			</view>
+		</view>
+		<!-- 空白留白 -->
+		<view class="bottom">
+			没有更多啦~
+		</view>
 	</view>
 </template>
 
 <script setup>
+import {ref} from 'vue'
+import safe from '@/components/safe/safe.vue'
+
+
+// 轮播图相关数据
+const currentIndex = ref(0)
+let currentId = 0
+const bannerList = [
+	{
+		id:1,
+		url:'/static/banner/banner1.png'
+	},
+	{
+		id:2,
+		url:'/static/banner/banner2.png'
+	},
+	{
+		id:3,
+		url:'/static/banner/banner3.png'
+	},
+	{
+		id:4,
+		url:'/static/banner/banner4.png'
+	}
+]
+// 轮播图指示点改变事件
+const changeDots = (e) => {
+	currentIndex.value = e.detail.current
+	currentId = bannerList[currentIndex.value].id
+}
+
+// 首页各类商品数据
+const classifyList = [
+	{
+		id:1,
+		text:'面霜',
+		url:'/static/banner/banner1.png',
+		description:'面霜面霜面霜面霜面霜，面霜面霜面霜面霜面霜',
+		price:100,
+		sell:2313
+	},{
+		id:2,
+		text:'口红',
+		url:'/static/banner/banner2.png',
+		description:'口红',
+		price:100,
+		sell:231
+	},{
+		id:3,
+		text:'水乳',
+		url:'/static/banner/banner3.png',
+		description:'水乳',
+		price:100,
+		sell:2313
+	},{
+		id:4,
+		text:'美甲',
+		url:'/static/banner/banner4.png',
+		description:'美甲',
+		price:100,
+		sell:2313
+	},{
+		id:5,
+		text:'洁面',
+		url:'/static/banner/banner1.png',
+		description:'洁面',
+		price:100,
+		sell:2313
+	},{
+		id:6,
+		text:'面霜',
+		url:'/static/banner/banner2.png',
+		description:'面霜',
+		price:100,
+		sell:2313
+	},{
+		id:7,
+		text:'面霜',
+		url:'/static/banner/banner3.png',
+		description:'面霜',
+		price:100,
+		sell:2313
+	},{
+		id:8,
+		text:'面霜',
+		url:'/static/banner/banner4.png',
+		description:'面霜',
+		price:100,
+		sell:2313
+	},{
+		id:9,
+		text:'面霜',
+		url:'/static/banner/banner1.png',
+		description:'面霜',
+		price:100,
+		sell:2313
+	},{
+		id:10,
+		text:'面霜',
+		url:'/static/banner/banner2.png',
+		description:'面霜',
+		price:100,
+		sell:2313
+	}
+]
+
 </script>
 
-<style lang="scss">
-	.content{
+<style lang="scss" scoped>
+.layout{
+	.background{
+			width: 100%;
+			height: 452rpx;
+			border-radius: 0 0 100rpx 100rpx;
+			background-color: $brand-theme-color;
 	}
+	.top{
+		width: 100%;
+		height: 88rpx;
+		padding:20rpx 60rpx;
+		margin-bottom: 8rpx;
+		font-size: 48rpx;
+		line-height: 48rpx;
+		color: $text-font-color-2;
+	}
+	.search{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		line-height: 56rpx;
+		padding:20rpx 60rpx;
+		margin-bottom: 42rpx;
+		.left{
+			width: 526rpx;
+			height: 100%;
+			font-size: 25rpx;
+			color: #CCC;
+			background-color: $brand-bg-color-item;
+			border-radius: 20rpx;
+			.icon{
+				margin: 10rpx;
+			}
+		}
+		.right{
+			width: 56rpx;
+			height: 56rpx;
+			background-color:$brand-bg-color-item;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 20rpx;
+		}
+	}
+	.banner{
+		width: 100%;
+		swiper{
+			width: 100%;
+			height: 274rpx;
+			&-item{
+				width: 100%;
+				height: 100%;
+				padding:0 60rpx;
+				image{
+					width: 100%;
+					height: 100%;
+					border-radius: 40rpx;
+				}
+			}
+		}
+	}
+	.classify{
+		width: 100%;
+		background-color: $text-font-color-2;
+		padding: 100rpx 60rpx 0 60rpx;
+		.list{
+			display: flex;
+			flex-wrap: wrap;
+			.items{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin-right: 50rpx;
+				margin-bottom: 30rpx;
+				&:nth-child(5n){
+					margin-right: 0;
+				}
+				.img {
+					width: 86rpx;
+					height: 86rpx;
+					background-color: $brand-bg-color-item;
+					border-radius: 32rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					margin-bottom: 20rpx;
+					image {
+						width: 60%;
+						height: 60%;
+						border-radius:32rpx;
+					}
+				}
+				.text {
+				  font-size: 24rpx;
+				  color: $text-font-color-1;
+				  font-weight: 500;
+				}
+			}
+		}
+	}
+	.pic{
+		width: 100%;
+		height: 204rpx;
+		padding: 0 60rpx;
+		margin: 40rpx 0 60rpx 0;
+		border-radius: 40rpx;
+		image{
+			width: 100%;
+			height: 100%;
+			border-radius: 40rpx;
+		}
+	}
+	.hot{
+		width: 100%;
+		height: 50rpx;
+		padding: 0 60rpx;
+		margin-bottom: 10rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.left{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 36rpx;
+			.title{
+				margin-left: 20rpx;
+			}
+		}
+		.right{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 22rpx;
+			color: $text-font-color-3;
+			.more{
+				margin-right: 5rpx;
+			}
+		}
+	}
+	.product{
+		width: 100%;
+		background-color: $brand-bg-color-item;
+		padding: 0 60rpx;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 20rpx;
+		.items{
+			width: 305rpx;
+			height: 430rpx;
+			margin-top: 20rpx;
+			background-color: $text-font-color-2;
+			border-radius: 20rpx;
+			position: relative;
+			image{
+				width: 305rpx;
+				height: 234rpx;
+				border-radius: 20rpx;
+			}
+			.description{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2; /* 显示2行 */
+				-webkit-box-orient: vertical;
+				width: 305rpx;
+				padding: 10rpx 20rpx;
+				font-size: 28rpx;
+				font-weight: 400;
+			}
+			.price{
+				position: absolute;
+				bottom: 50rpx;
+				padding: 0 20rpx;
+				font-size: 32rpx;
+				font-weight: 500;
+			}
+			.onsell{
+				position: absolute;
+				bottom: 25rpx;
+				padding: 0 20rpx;
+				font-size: 22rpx;
+				color: $text-font-color-3;
+			}
+		}
+	}
+	.bottom{
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 20rpx;
+		padding: 25rpx 0;
+		background-color: $brand-bg-color-item;
+		color: $text-font-color-3;
+	}
+}
 </style>
