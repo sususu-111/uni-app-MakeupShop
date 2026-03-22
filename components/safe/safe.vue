@@ -1,5 +1,5 @@
 <template>
-	<view class="safe" :style="{height:getStatusBarHeight()+'px'}"></view>
+<view class="safe" :style="{height:getStatusBarHeight()+'px'}"></view>
 </template>
 
 <script setup>

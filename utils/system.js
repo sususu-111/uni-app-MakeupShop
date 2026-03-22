@@ -1,4 +1,4 @@
-// 底部导航栏安全区
+// 顶部导航栏安全区
 const SYSTEM_INFO = uni.getSystemInfoSync();
 export const getStatusBarHeight = ()=> SYSTEM_INFO.statusBarHeight || 10;
 
