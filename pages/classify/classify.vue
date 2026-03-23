@@ -1,19 +1,23 @@
 <template>
 	<view class="layout">
-		<!-- 安全适配区 -->
-		<safe></safe>
 		<!-- 背景 -->
 		<view class="background">
 			<!-- 头部标题 -->
+			<top-title :title="'分类'"></top-title>
 			<!-- 搜索框及分类筛选框 -->
-			<topInfo :title="'分类'"></topInfo>
-			<!-- 分类选项 -->
-			<view class="classItems">
-				<view class="item" v-for="item in classItems" :key="item.id" :class="{ active: activeId === item.id }" @click="activeId = item.id">
-					<text>{{item.name}}</text>
-				</view>
-			</view>
+			<search></search>
 		</view>	
+		<!-- 分类选项 -->
+		<!-- #ifdef H5 -->
+		<view class="classItems" :style="{marginTop:-125+'rpx'}">
+		<!-- #endif -->
+		<!-- #ifndef H5 -->
+		<view class="classItems" :style="{marginTop:-50+'rpx'}">
+		<!-- #endif -->
+			<view class="item" v-for="item in classItems" :key="item.id" :class="{ active: activeId === item.id }" @click="activeId = item.id">
+				<text>{{item.name}}</text>
+			</view>
+		</view>
 		<!-- 美妆分类 -->
 		<view class="classify">
 		    <view class="items" v-for="item in classifyList" :key="item.id">
@@ -43,7 +47,7 @@
 
 <script setup>
 import {ref,computed} from 'vue'
-
+import {getNavBarHeight} from '@/utils/system.js'
 // 分类选项
 const classItems = ref([
 	{
@@ -145,7 +149,7 @@ const rightList = computed(() => classifyList.filter((_, i) => i % 2 !== 0));
 .layout{
 	.background{
 		width: 100%;
-		height: 285rpx;
+		height: 300rpx;
 		background-color: $brand-theme-color;
 	}
 	.classItems{
@@ -180,7 +184,7 @@ const rightList = computed(() => classifyList.filter((_, i) => i % 2 !== 0));
 	.classify{
 			width: 100%;
 			background-color: $text-font-color-2;
-			padding: 160rpx 60rpx 60rpx 60rpx;
+			padding: 20rpx 60rpx;
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
 			gap: 30rpx;

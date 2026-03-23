@@ -1,20 +1,25 @@
 <template>
 	<view class="layout">
-		<!-- 安全适配区 -->
-		<safe></safe>
 		<!-- 背景 -->
 		<view class="background">
 			<!-- 头部标题 -->
+			<top-title :title="'美妆购物平台'"></top-title> 
 			<!-- 搜索框及分类筛选框 -->
-			<topInfo :title="'美妆购物平台'"></topInfo>
-			<!-- 轮播图 -->
-			<view class="banner">
-				<swiper indicator-dots indicator-color="rgba(255, 255, 255, 0.5)" indicator-active-color="#fff" circular autoplay :interval="4000" :duration="1500" @change="changeDots">
-					<swiper-item  v-for="item in bannerList" :key="item.id">
-						<image :src="item.url" mode="aspectFill" />
-					</swiper-item>
-				</swiper>
-			</view>
+			<search></search>
+		</view>
+		<!-- 轮播图 -->
+		<!-- #ifdef H5 -->
+		<view class="banner" :style="{marginTop:-225+'rpx'}">
+		<!-- #endif -->
+		
+		<!-- #ifndef H5 -->
+		<view class="banner" :style="{marginTop:-getNavBarHeight()+10+'px'}">
+		<!-- #endif -->
+			<swiper indicator-dots indicator-color="rgba(255, 255, 255, 0.5)" indicator-active-color="#fff" circular autoplay :interval="4000" :duration="1500" @change="changeDots">
+				<swiper-item  v-for="item in bannerList" :key="item.id">
+					<image :src="item.url" mode="aspectFill" />
+				</swiper-item>
+			</swiper>
 		</view>
 		<!-- 美妆分类 -->
 		<view class="classify">
@@ -53,6 +58,7 @@
 
 <script setup>
 import {ref} from 'vue'
+import {getNavBarHeight} from '@/utils/system.js'
 
 // 轮播图相关数据
 const currentIndex = ref(0)
@@ -161,10 +167,10 @@ const classifyList = [
 <style lang="scss" scoped>
 .layout{
 	.background{
-			width: 100%;
-			height: 452rpx;
-			border-radius: 0 0 100rpx 100rpx;
-			background-color: $brand-theme-color;
+		width: 100vw;
+		height: 400rpx;
+		border-radius: 0 0 100rpx 100rpx;
+		background-color: $brand-theme-color;
 	}
 	.banner{
 		width: 100%;
@@ -186,7 +192,7 @@ const classifyList = [
 	.classify{
 		width: 100%;
 		background-color: $text-font-color-2;
-		padding: 100rpx 60rpx 0 60rpx;
+		padding: 50rpx 60rpx 0 60rpx;
 		.list{
 			display: flex;
 			flex-wrap: wrap;
