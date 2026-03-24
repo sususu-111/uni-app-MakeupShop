@@ -58,6 +58,7 @@
 		
 		<!-- 空白留白 -->
 		<bottom-end></bottom-end>
+		
 	</view>
 </template>
 
@@ -207,6 +208,11 @@ const classifyList = [
 				align-items: center;
 				margin-right: 50rpx;
 				margin-bottom: 30rpx;
+				transition: transform 0.1s ease;
+				&:active {
+					transform: scale(0.9);
+					opacity: 0.8;
+				}
 				&:nth-child(5n){
 					margin-right: 0;
 				}
@@ -239,6 +245,10 @@ const classifyList = [
 		padding: 0 60rpx;
 		margin: 40rpx 0 60rpx 0;
 		border-radius: 40rpx;
+		transition: opacity 0.2s;
+		&:active {
+			opacity: 0.85;
+		}
 		image{
 			width: 100%;
 			height: 100%;
@@ -268,6 +278,10 @@ const classifyList = [
 			justify-content: center;
 			font-size: 22rpx;
 			color: $text-font-color-3;
+			transition: opacity 0.2s;
+			&:active {
+				opacity: 0.6; // “更多”按钮点击反馈
+			}
 			.more{
 				margin-right: 5rpx;
 			}

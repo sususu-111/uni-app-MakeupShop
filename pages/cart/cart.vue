@@ -5,7 +5,7 @@
 		<!-- 用户登陆后 -->
 		<view class="login" v-if="true">
 			<!-- 购物车商品 -->
-			<view class="goods-list" :style="{paddingTop:getNavBarHeight()+50+'px'}" v-if="false">
+			<view class="goods-list" :style="{paddingTop:getNavBarHeight()+50+'px'}" v-if="true">
 				<view class="goods" v-for="item in classifyList" :key="item.id">
 					<view class="left">
 						<image :src="item.url" mode="aspectFill"></image>
@@ -176,6 +176,11 @@ const classifyList = [
 			margin-bottom: 64rpx;
 			border-radius: 32rpx 0 0 32rpx;
 			background-color: $text-font-color-2;
+			transition: all 0.2s ease; // 平滑过渡
+			&:active {
+				transform: scale(0.98); // 轻微缩小
+				background-color: #fafafa; // 变色反馈
+			}
 			.left{
 				width: 180rpx;
 				height: 180rpx;
@@ -254,6 +259,11 @@ const classifyList = [
 					position: absolute;
 					top: 25rpx;
 					right: 23rpx;
+					transition: transform 0.1s;
+					&:active {
+						transform: scale(1.2); // 删除图标点击轻微放大提示
+						opacity: 0.7;
+					}
 				}
 				.price{
 					position: absolute;
@@ -321,6 +331,11 @@ const classifyList = [
 	            color: $text-font-color-2;
 	            font-size: 32rpx;
 	            font-weight: 500;
+				transition: all 0.2s ease;
+				&:active {
+					transform: scale(0.92);
+					opacity: 0.9;
+				}
 	        }
 	    }
 	}
@@ -350,6 +365,11 @@ const classifyList = [
 			color: $text-font-color-2;
 			border-radius: 50rpx;
 			background-color: $brand-theme-color;
+			transition: all 0.2s ease;
+			&:active {
+				transform: scale(0.9);
+				opacity: 0.8;
+			}
 		}
 	}
 	.guestLike{

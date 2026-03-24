@@ -22,6 +22,12 @@ const props = defineProps({
 	background-color: $text-font-color-2;
 	border-radius: 20rpx;
 	position: relative;
+	transition: all 0.2s ease; // 平滑过渡
+	&:active {
+		transform: scale(0.96); // 点击时轻微缩小
+		background-color: #f8f8f8; // 点击时背景色轻微变深
+		opacity: 0.9;
+	}
 	image{
 		width: 305rpx;
 		height: 234rpx;

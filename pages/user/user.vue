@@ -4,7 +4,7 @@
 		<view class="background">
 			<!-- 填充区 -->
 			<view class="fill" :style="{paddingTop:getNavBarHeight()+'px'}"></view>
-			<view class="user">
+			<view class="user" hover-class="user-active" :hover-stay-time="50">
 				<view class="userphoto">
 					<image src="/static/banner/banner1.png" mode="aspectFill"></image>
 				</view>
@@ -22,7 +22,7 @@
 		</view>
 		
 		<!-- 会员等级框 -->
-		<view class="membership">
+		<view class="membership" hover-class="membership-active" :hover-stay-time="50">
 			<view class="left">
 				<view class="text">
 					<view class="level">Lv 1</view>
@@ -48,7 +48,7 @@
 		
 		<!-- 余额/积分/收藏/优惠 -->
 		<view class="others">
-			<view class="other" v-for="item in list" :key="item.id">
+			<view class="other" v-for="item in list" :key="item.id" hover-class="other-active" :hover-stay-time="50">
 				<view class="num">
 					{{item.num}}
 				</view>
@@ -64,10 +64,12 @@
 				我的订单
 			</view>
 			<view class="items">
-				<view class="item" v-for="item in order" :key="item.id">
-					<view class="icons">
-						<image :src="item.icons" mode="aspectFill"></image>
-					</view>
+				<view class="item" v-for="item in order" :key="item.id" hover-class="order-item-active" :hover-stay-time="50">
+					<uni-badge size="small" :text="item.id" absolute="rightTop" type="error">
+						<view class="icons">
+							<image :src="item.icons" mode="aspectFill"></image>
+						</view>
+					</uni-badge>
 					<view class="name">
 						{{item.name}}
 					</view>
@@ -76,13 +78,13 @@
 		</view>
 		
 		<!-- 图片广告 -->
-		<view class="pic">
+		<view class="pic" hover-class="pic-active" :hover-stay-time="50">
 			<image src="../../static/banner/banner1.png" mode="aspectFill"></image>
 		</view>
 		
 		<!-- 用户相关的信息 -->
 		<view class="info">
-			<view class="item" v-for="item in info" :key="item.id">
+			<view class="item" v-for="item in info" :key="item.id" hover-class="info-item-active" :hover-stay-time="50">
 				<view class="left">
 					<view class="icons">
 						<image :src="item.icons" mode="aspectFill"></image>
@@ -192,6 +194,12 @@ const info = ref([
 			border: 1rpx solid rgb($brand-theme-color,0.2);
 			border-radius: 20rpx;
 			box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+			transition: all 0.2s ease;
+			&.user-active {
+				transform: scale(0.97);
+				opacity: 0.9;
+				background-color: rgba(255, 255, 255, 0.1);
+			}
 			.userphoto{
 				width: 122rpx;
 				height: 122rpx;
@@ -233,6 +241,11 @@ const info = ref([
 		margin-top: -230rpx;
 		padding: 0 35rpx;
 		position: relative;
+		transition: all 0.2s ease;
+		&.membership-active {
+			transform: scale(0.98);
+			background: rgba($brand-bg-color-item, 0.4);
+		}
 		.left{
 			.text{
 				display: flex;
@@ -300,6 +313,11 @@ const info = ref([
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
+			transition: all 0.2s ease;
+			&.other-active {
+				opacity: 0.7;
+				transform: scale(0.95);
+			}
 			.num,.name{
 				color: $user-font-color;
 				font-size: 36rpx;
@@ -328,6 +346,11 @@ const info = ref([
 				align-items: center;
 				flex-direction: column;
 				margin: 0 auto;
+				transition: all 0.2s ease;
+				&.order-item-active {
+					opacity: 0.8;
+					transform: scale(0.92);
+				}
 				.icons{
 					width: 50rpx;
 					height: 50rpx;
@@ -351,6 +374,11 @@ const info = ref([
 		padding: 0 60rpx;
 		margin: 40rpx 0 60rpx 0;
 		border-radius: 40rpx;
+		transition: all 0.2s ease;
+		&.pic-active {
+			transform: scale(0.97);
+			opacity: 0.9;
+		}
 		image{
 			width: 100%;
 			height: 100%;
@@ -364,6 +392,10 @@ const info = ref([
 			justify-content: space-between;
 			padding: 15rpx 0;
 			border-bottom: 1rpx solid rgba($text-font-color-1,0.02);
+			transition: all 0.2s ease;
+			&.info-item-active {
+				background-color: rgba(0, 0, 0, 0.03);
+			}
 			&:last-child{
 			border-bottom: none;
 			}

@@ -171,6 +171,11 @@ const rightList = computed(() => classifyList.filter((_, i) => i % 2 !== 0));
 			border-radius: 62rpx;
 			color: $text-font-color-1;
 			background-color: $text-font-color-7;
+			transition: all 0.2s ease;
+			&:active {
+				transform: scale(0.92);
+				opacity: 0.8;
+			}
 			/* 分类选项选中样式 */
 			&.active{
 				color: $text-font-color-4;
@@ -193,6 +198,11 @@ const rightList = computed(() => classifyList.filter((_, i) => i % 2 !== 0));
 				align-items: center;
 				justify-content: center;
 				flex-direction: column;
+				transition: transform 0.1s ease;
+				&:active {
+					transform: scale(0.9);
+					opacity: 0.8;
+				}
 				image{
 					width: 128rpx;
 					height: 128rpx;
