@@ -1,11 +1,11 @@
 <template>
 	<view class="layout">
+		<!-- 头部标题 -->
+		<top-title :title="'购物车'"></top-title>
 		<!-- 用户登陆后 -->
 		<view class="login" v-if="true">
-			<!-- 头部标题 -->
-			<top-title :title="'购物车'"></top-title>
 			<!-- 购物车商品 -->
-			<view class="goods-list" :style="{paddingTop:getNavBarHeight()+5+'px'}" v-if="true">
+			<view class="goods-list" :style="{paddingTop:getNavBarHeight()+50+'px'}" v-if="false">
 				<view class="goods" v-for="item in classifyList" :key="item.id">
 					<view class="left">
 						<image :src="item.url" mode="aspectFill"></image>
@@ -34,7 +34,9 @@
 			</view>
 			<!-- 购物车无商品时 -->
 			<view class="nogoods-list" v-else>
-				<image src="/static/cart/cart1.png" mode="aspectFill"></image>
+				<view class="text" :style="{paddingTop:getNavBarHeight()+50+'px'}">
+					购物车中没有商品，去逛逛吧~~
+				</view>
 				<view class="toback">
 					去首页
 				</view>
@@ -58,8 +60,13 @@
 			</view>
 		</view>
 		<!-- 用户未登录 -->
-		<view class="noLogin">
-			
+		<view class="noLogin" v-else>
+			<view class="text" :style="{paddingTop:getNavBarHeight()+50+'px'}">
+				您还未登录哦~
+			</view>
+			<view class="toback">
+				去登录
+			</view>
 		</view>
 		<!-- 猜你喜欢 -->
 		<view class="guestLike">
@@ -317,12 +324,19 @@ const classifyList = [
 	        }
 	    }
 	}
-	.nogoods-list{
-		flex: 1;
+	.nogoods-list,.noLogin{
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+		.text{
+			padding-top: 200rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 30rpx;
+			font-weight: 500;
+		}
 		.toback{
 			width: 150rpx;
 			height: 80rpx;

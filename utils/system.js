@@ -14,8 +14,3 @@ export const getTitleBarHeight = ()=>{
 
 // 将搜索框固定所需要的高度
 export const  getNavBarHeight = ()=> getStatusBarHeight()+getTitleBarHeight();
-
-// 底部导航栏高度
-export const  getTabBarHeight = ()=>{
-	
-}
