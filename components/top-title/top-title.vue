@@ -13,7 +13,8 @@
 import {getTitleBarHeight} from '@/utils/system.js'
 const props = defineProps({
 	title:{
-		type:String
+		type:String,
+		default:''
 	}
 })
 </script>

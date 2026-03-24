@@ -7,11 +7,11 @@
 			<!-- 搜索框及分类筛选框 -->
 			<search></search>
 		</view>
+		
 		<!-- 轮播图 -->
 		<!-- #ifdef H5 -->
 		<view class="banner" :style="{marginTop:-225+'rpx'}">
-		<!-- #endif -->
-		
+		<!-- #endif -->	
 		<!-- #ifndef H5 -->
 		<view class="banner" :style="{marginTop:-getNavBarHeight()+10+'px'}">
 		<!-- #endif -->
@@ -21,6 +21,7 @@
 				</swiper-item>
 			</swiper>
 		</view>
+		
 		<!-- 美妆分类 -->
 		<view class="classify">
 			<view class="list">
@@ -32,10 +33,12 @@
 			  </view>
 			</view>
 		</view>
+		
 		<!-- 图片广告 -->
 		<view class="pic">
 			<image src="../../static/banner/banner1.png" mode="aspectFill"></image>
 		</view>
+		
 		<!-- 热卖爆品 -->
 		<view class="hot">
 			<view class="left">
@@ -47,10 +50,12 @@
 				<uni-icons type="right" size="10" color="#B3B3B3"></uni-icons>
 			</view>
 		</view>
+		
 		<!-- 商品 -->
 		<view class="product">
 			<items v-for="item in classifyList" :key="item.id" :item="item"></items>
 		</view>
+		
 		<!-- 空白留白 -->
 		<bottom-end></bottom-end>
 	</view>
