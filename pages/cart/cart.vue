@@ -6,7 +6,7 @@
 		<view class="login" v-if="true">
 			<!-- 购物车商品 -->
 			<view class="goods-list" :style="{paddingTop:getNavBarHeight()+50+'px'}" v-if="true">
-				<view class="goods" v-for="item in classifyList" :key="item.id">
+				<view class="goods" v-for="item in classifyList" :key="item.id" hover-class="active" :hover-stay-time="50">
 					<view class="left">
 						<image :src="item.url" mode="aspectFill"></image>
 					</view>
@@ -14,7 +14,7 @@
 						<view class="description">欧舒丹甜蜜樱花沐浴啫喱</view>
 						<!-- 评分 -->
 						<view class="star">
-							<uni-icons type="star-filled" size="15" color="#FFC70E"></uni-icons>
+							<uni-icons type="star-filled" size="30rpx" color="#FFC70E"></uni-icons>
 							<text class="{padding-left: 5rpx;}">(4.5)</text>
 						</view>
 						<!-- 计数器 -->
@@ -23,8 +23,8 @@
 						</view>
 					</view>
 					<view class="right">
-						<view class="icons">
-							<uni-icons type="trash-filled" size="20" color="#AAA"></uni-icons>
+						<view class="icons" hover-class="active" :hover-stay-time="50">
+							<uni-icons type="trash-filled" size="40rpx" color="#AAA"></uni-icons>
 						</view>
 						<view class="price">
 							￥100
@@ -37,7 +37,7 @@
 				<view class="text" :style="{paddingTop:getNavBarHeight()+50+'px'}">
 					购物车中没有商品，去逛逛吧~~
 				</view>
-				<view class="toback">
+				<view class="toback" hover-class="active" :hover-stay-time="50">
 					去首页
 				</view>
 			</view>
@@ -53,7 +53,7 @@
 					</view>
 				</view>
 				<view class="right">
-					<view class="confirm">
+					<view class="confirm" hover-class="active" :hover-stay-time="50">
 						确认
 					</view>
 				</view>
@@ -64,14 +64,14 @@
 			<view class="text" :style="{paddingTop:getNavBarHeight()+50+'px'}">
 				您还未登录哦~
 			</view>
-			<view class="toback">
+			<view class="toback" hover-class="active" :hover-stay-time="50">
 				去登录
 			</view>
 		</view>
 		<!-- 猜你喜欢 -->
 		<view class="guestLike">
 			<view class="title">
-				<uni-icons type="hand-up" size="25" color="#5756B3"></uni-icons>
+				<uni-icons type="hand-up" size="50rpx" color="#5756B3"></uni-icons>
 				<view class="text">猜你喜欢</view>
 			</view>
 			<view class="goods">
@@ -177,7 +177,7 @@ const classifyList = [
 			border-radius: 32rpx 0 0 32rpx;
 			background-color: $text-font-color-2;
 			transition: all 0.2s ease; // 平滑过渡
-			&:active {
+			&.active {
 				transform: scale(0.98); // 轻微缩小
 				background-color: #fafafa; // 变色反馈
 			}
@@ -260,7 +260,7 @@ const classifyList = [
 					top: 25rpx;
 					right: 23rpx;
 					transition: transform 0.1s;
-					&:active {
+					&.active {
 						transform: scale(1.2); // 删除图标点击轻微放大提示
 						opacity: 0.7;
 					}
@@ -332,7 +332,7 @@ const classifyList = [
 	            font-size: 32rpx;
 	            font-weight: 500;
 				transition: all 0.2s ease;
-				&:active {
+				&.active {
 					transform: scale(0.92);
 					opacity: 0.9;
 				}
@@ -366,7 +366,7 @@ const classifyList = [
 			border-radius: 50rpx;
 			background-color: $brand-theme-color;
 			transition: all 0.2s ease;
-			&:active {
+			&.active {
 				transform: scale(0.9);
 				opacity: 0.8;
 			}

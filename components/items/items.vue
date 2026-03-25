@@ -1,6 +1,6 @@
 <template>
 <!-- 商品 -->
-<view class="items">
+<view class="items" hover-class="active" :hover-stay-time="50">
 	<image :src="item.url" mode="aspectFill"></image>
 	<view class="description">{{item.description}}</view>
 	<view class="price">￥{{item.price}}</view>
@@ -22,11 +22,11 @@ const props = defineProps({
 	background-color: $text-font-color-2;
 	border-radius: 20rpx;
 	position: relative;
-	transition: all 0.2s ease; // 平滑过渡
-	&:active {
-		transform: scale(0.96); // 点击时轻微缩小
-		background-color: #f8f8f8; // 点击时背景色轻微变深
+	transition: all 0.2s ease;
+	&.active{
+		transform: scale(0.98);
 		opacity: 0.9;
+		background-color: #FAFAFA;
 	}
 	image{
 		width: 305rpx;

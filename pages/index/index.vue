@@ -25,7 +25,7 @@
 		<!-- 美妆分类 -->
 		<view class="classify">
 			<view class="list">
-			  <view class="items" v-for="item in classifyList" :key="item.id">
+			  <view class="items" v-for="item in classifyList" :key="item.id" hover-class="active" :hover-stay-time="50">
 				<view class="img">
 				  <image :src="item.url" mode="aspectFill"></image>
 				</view>
@@ -35,19 +35,19 @@
 		</view>
 		
 		<!-- 图片广告 -->
-		<view class="pic">
+		<view class="pic" hover-class="active" :hover-stay-time="50">
 			<image src="../../static/banner/banner1.png" mode="aspectFill"></image>
 		</view>
 		
 		<!-- 热卖爆品 -->
 		<view class="hot">
 			<view class="left">
-				<uni-icons type="fire" size="25" color="#5756B3"></uni-icons>
+				<uni-icons type="fire" size="50rpx" color="#5756B3"></uni-icons>
 				<text class="title">热卖爆品</text>
 			</view>
-			<view class="right">
+			<view class="right" hover-class="active" :hover-stay-time="50">
 				<text class="more">更多</text>
-				<uni-icons type="right" size="10" color="#B3B3B3"></uni-icons>
+				<uni-icons type="right" size="20rpx" color="#B3B3B3"></uni-icons>
 			</view>
 		</view>
 		
@@ -209,7 +209,7 @@ const classifyList = [
 				margin-right: 50rpx;
 				margin-bottom: 30rpx;
 				transition: transform 0.1s ease;
-				&:active {
+				&.active {
 					transform: scale(0.9);
 					opacity: 0.8;
 				}
@@ -246,7 +246,7 @@ const classifyList = [
 		margin: 40rpx 0 60rpx 0;
 		border-radius: 40rpx;
 		transition: opacity 0.2s;
-		&:active {
+		&.active {
 			opacity: 0.85;
 		}
 		image{
@@ -279,7 +279,7 @@ const classifyList = [
 			font-size: 22rpx;
 			color: $text-font-color-3;
 			transition: opacity 0.2s;
-			&:active {
+			&.active {
 				opacity: 0.6; // “更多”按钮点击反馈
 			}
 			.more{

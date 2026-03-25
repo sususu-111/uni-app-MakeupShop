@@ -94,7 +94,7 @@
 					</view>
 				</view>
 				<view class="right">
-					<uni-icons type="right" size="18" color="#9E9E9E"></uni-icons>
+					<uni-icons type="right" size="36rpx" color="#9E9E9E"></uni-icons>
 				</view>
 			</view>
 		</view>
@@ -167,12 +167,17 @@ const info = ref([
 	{
 		id:2,
 		name:'优惠券',
-		icons:'/static/user/coupon.png'
+		icons:'/static/user/Coupon.png'
 	},
 	{
-		id:1,
+		id:3,
 		name:'历史订单',
 		icons:'/static/user/HistoricalOrders.png'
+	},
+	{
+		id:4,
+		name:'设置',
+		icons:'/static/user/Setting.png'
 	},
 ])
 </script>

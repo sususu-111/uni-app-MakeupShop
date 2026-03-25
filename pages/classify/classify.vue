@@ -12,15 +12,15 @@
 		<view class="classItems" :style="{marginTop:-125+'rpx'}">
 		<!-- #endif -->
 		<!-- #ifndef H5 -->
-		<view class="classItems" :style="{marginTop:-50+'rpx'}">
+		<view class="classItems" :style="{marginTop:-50+'px'}">
 		<!-- #endif -->
-			<view class="item" v-for="item in classItems" :key="item.id" :class="{ active: activeId === item.id }" @click="activeId = item.id">
+			<view class="item" v-for="item in classItems" :key="item.id" :class="{ active: activeId === item.id }" @click="activeId = item.id" hover-class="hover-active" :hover-stay-time="50">
 				<text>{{item.name}}</text>
 			</view>
 		</view>
 		<!-- 美妆分类 -->
 		<view class="classify">
-		    <view class="items" v-for="item in classifyList" :key="item.id">
+		    <view class="items" v-for="item in classifyList" :key="item.id" hover-class="active" :hover-stay-time="50">
 				<image :src="item.url" mode="aspectFill"></image>
 				<text class="text">{{ item.text }}</text>
 		    </view>
@@ -140,6 +140,7 @@ const classifyList = [
 		sell:2313
 	}
 ]
+
 // 使用计算属性将列表数据拆分，实现布局呈现瀑布形状
 const leftList = computed(() => classifyList.filter((_, i) => i % 2 === 0));
 const rightList = computed(() => classifyList.filter((_, i) => i % 2 !== 0));
@@ -172,14 +173,14 @@ const rightList = computed(() => classifyList.filter((_, i) => i % 2 !== 0));
 			color: $text-font-color-1;
 			background-color: $text-font-color-7;
 			transition: all 0.2s ease;
-			&:active {
-				transform: scale(0.92);
-				opacity: 0.8;
-			}
 			/* 分类选项选中样式 */
 			&.active{
 				color: $text-font-color-4;
 				background-color: $text-font-color-6;
+			}
+			&.hover-active{
+				transform: scale(0.95);
+				opacity: 0.8;
 			}
 		}
 		&:last-child{
@@ -199,7 +200,7 @@ const rightList = computed(() => classifyList.filter((_, i) => i % 2 !== 0));
 				justify-content: center;
 				flex-direction: column;
 				transition: transform 0.1s ease;
-				&:active {
+				&.active {
 					transform: scale(0.9);
 					opacity: 0.8;
 				}
