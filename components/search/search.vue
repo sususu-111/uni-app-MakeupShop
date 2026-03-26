@@ -56,10 +56,19 @@
 				:activeColor="'#5756B3'"
 				:blockSize="40"
 				:format="()=> {return}"
+				@changing="changePrice"
 			/>
 		</view>
 		<view class="num">
-			￥{{priceRange[0]}} -￥{{priceRange[1]}}
+			<view class="price-input">
+				<text>￥</text>
+				<input type="number" v-model.number="priceRange[0]" />
+			</view>
+			<text class="divider">-</text>
+			<view class="price-input">
+				<text>￥</text>
+				<input type="number" v-model.number="priceRange[1]" />
+			</view>
 		</view>
 	</view>
 	
@@ -172,7 +181,11 @@ const menuList = ref({
 })
 
 // 价格区间
-const priceRange = ref([0,2000])
+const priceRange = ref([0, 2000])
+const changePrice = (e) => {
+	// 直接替换数组引用，确保 Vue 3 能够最快响应
+	priceRange.value = [...e]
+}
 
 // 重置按钮
 const reset = ()=>{
@@ -322,8 +335,30 @@ const confirm = ()=>{
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			font-size: 33rpx;
-			color: $text-font-color-1;
+			margin-top: 30rpx;
+			.price-input {
+				display: flex;
+				align-items: center;
+				background-color: $brand-bg-color-item;
+				padding: 10rpx 20rpx;
+				border-radius: 12rpx;
+				width: 180rpx;
+				text {
+					font-size: 24rpx;
+					color: $text-font-color-3;
+				}
+				input {
+					flex: 1;
+					font-size: 28rpx;
+					color: $text-font-color-1;
+					font-weight: 500;
+					margin-left: 5rpx;
+				}
+			}
+			.divider {
+				margin: 0 20rpx;
+				color: $text-font-color-3;
+			}
 		}
 	}
 	.bottom{
@@ -354,12 +389,5 @@ const confirm = ()=>{
 			background-color: $brand-theme-color;
 		}
 	}
-}
-/* 隐藏刻度线和刻度文字 */
-:deep(.slider-range__scale) {
-  display: none !important;
-}
-:deep(.slider-range__scale-text) {
-  display: none !important;
 }
 </style>

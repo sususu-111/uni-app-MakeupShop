@@ -134,26 +134,26 @@ const order = ref([
 	{
 		id:1,
 		name:'待付款',
-		icons:'/static/user/PendingPayment.png'
+		icons:'/static/user/PendingPayment.svg'
 	},
 	{
 		id:2,
 		name:'待发货',
-		icons:'/static/user/ToBeShipped.png'
+		icons:'/static/user/ToBeShipped.svg'
 	},
 	{
 		id:3,
 		name:'待收货',
-		icons:'/static/user/ToBeReceived.png'
+		icons:'/static/user/ToBeReceived.svg'
 	},
 	{
 		id:4,
 		name:'待评价',
-		icons:'/static/user/ToBeEvaluated.png'
+		icons:'/static/user/ToBeEvaluated.svg'
 	},{
 		id:5,
 		name:'退款/售后',
-		icons:'/static/user/Refund.png'
+		icons:'/static/user/Refund.svg'
 	}
 ])
 
@@ -162,22 +162,22 @@ const info = ref([
 	{
 		id:1,
 		name:'收货地址',
-		icons:'/static/user/ShippingAddress.png'
+		icons:'/static/user/ShippingAddress.svg'
 	},
 	{
 		id:2,
 		name:'优惠券',
-		icons:'/static/user/Coupon.png'
+		icons:'/static/user/Coupon.svg'
 	},
 	{
 		id:3,
 		name:'历史订单',
-		icons:'/static/user/HistoricalOrders.png'
+		icons:'/static/user/HistoricalOrders.svg'
 	},
 	{
 		id:4,
 		name:'设置',
-		icons:'/static/user/Setting.png'
+		icons:'/static/user/Setting.svg'
 	},
 ])
 </script>

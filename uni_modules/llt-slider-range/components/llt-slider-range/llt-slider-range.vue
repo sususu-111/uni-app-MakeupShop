@@ -28,12 +28,12 @@
       <view class="range-tip" :style="rightTipStyle">{{ formatValue(selectedRange[1]) }}</view>
 
       <!-- 刻度线 -->
-      <view
+      <!-- <view
         v-for="n in scaleCount + 1"
         :key="n"
         class="slider-scale"
         :style="{left: `${(n / scaleCount) * 100}%`}"
-      />
+      /> -->
       <!-- 最小最大值显示 -->
       <view class="slider-value" style="left: 0">{{ min }}</view>
       <view class="slider-value" style="right: 0">{{ max }}</view>

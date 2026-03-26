@@ -35,7 +35,6 @@ const props = defineProps({
 	}
 	.description{
 		overflow: hidden;
-		text-overflow: ellipsis;
 		display: -webkit-box;
 		-webkit-line-clamp: 2; /* 显示2行 */
 		-webkit-box-orient: vertical;
