@@ -16,7 +16,7 @@
 		<view class="banner" :style="{marginTop:-getNavBarHeight()+10+'px'}">
 		<!-- #endif -->
 			<swiper indicator-dots indicator-color="rgba(255, 255, 255, 0.5)" indicator-active-color="#fff" circular autoplay :interval="4000" :duration="1500" @change="changeDots">
-				<swiper-item  v-for="item in bannerList" :key="item.id">
+				<swiper-item  v-for="item in bannerList" :key="item.id" @click="toGoodsDetail">
 					<image :src="item.url" mode="aspectFill" />
 				</swiper-item>
 			</swiper>
@@ -35,7 +35,7 @@
 		</view>
 		
 		<!-- 图片广告 -->
-		<view class="pic" hover-class="active" :hover-stay-time="50">
+		<view class="pic" hover-class="active" :hover-stay-time="50" @click="toGoodsDetail">
 			<image src="../../static/banner/banner1.png" mode="aspectFill"></image>
 		</view>
 		
@@ -91,6 +91,13 @@ const bannerList = [
 const changeDots = (e) => {
 	currentIndex.value = e.detail.current
 	currentId = bannerList[currentIndex.value].id
+}
+
+// 点击商品并携带商品id跳转到商品详情页
+const toGoodsDetail = ()=>{
+	uni.navigateTo({
+		url:'/pages/goods-detail/goods-detail?id=1'
+	})
 }
 
 // 首页各类商品数据

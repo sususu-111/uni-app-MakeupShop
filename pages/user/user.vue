@@ -78,7 +78,7 @@
 		</view>
 		
 		<!-- 图片广告 -->
-		<view class="pic" hover-class="pic-active" :hover-stay-time="50">
+		<view class="pic" hover-class="pic-active" :hover-stay-time="50" @click="toGoodsDetail">
 			<image src="../../static/banner/banner1.png" mode="aspectFill"></image>
 		</view>
 		
@@ -180,6 +180,13 @@ const info = ref([
 		icons:'/static/user/Setting.svg'
 	},
 ])
+
+// 点击商品并携带商品id跳转到商品详情页
+const toGoodsDetail = (id) => {
+	uni.navigateTo({
+		url: '/pages/goods-detail/goods-detail?id=' + id
+	})
+}
 </script>
 
 <style lang="scss" scoped>

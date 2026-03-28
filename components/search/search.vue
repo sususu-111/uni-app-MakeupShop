@@ -93,42 +93,42 @@ const sectionList = ref([
 	{
 		id:1,
 		label:'头发',
-		icons:'/static/user/ShippingAddress.png'
+		icons:'/static/user/ShippingAddress.svg'
 	},
 	{
 		id:2,
 		label:'指甲',
-		icons:'/static/user/ShippingAddress.png'
+		icons:'/static/user/ShippingAddress.svg'
 	},
 	{
 		id:3,
 		label:'身体',
-		icons:'/static/user/Coupon.png'
+		icons:'/static/user/Coupon.svg'
 	},
 	{
 		id:4,
 		label:'脸部',
-		icons:'/static/user/Coupon.png'
+		icons:'/static/user/Coupon.svg'
 	},
 	{
 		id:5,
 		label:'眼睛',
-		icons:'/static/user/HistoricalOrders.png'
+		icons:'/static/user/HistoricalOrders.svg'
 	},
 	{
 		id:6,
 		label:'手部',
-		icons:'/static/user/HistoricalOrders.png'
+		icons:'/static/user/HistoricalOrders.svg'
 	},
 	{
 		id:7,
 		label:'脚部',
-		icons:'/static/user/ShippingAddress.png'
+		icons:'/static/user/ShippingAddress.svg'
 	},
 	{
 		id:8,
 		label:'化妆',
-		icons:'/static/user/Coupon.png'
+		icons:'/static/user/Coupon.svg'
 	},
 ])
 const ratingList = ref([

@@ -34,15 +34,7 @@
 			</view>
 		</view>
 		<!-- 猜你喜欢 -->
-		<view class="guestLike">
-			<view class="title">
-				<uni-icons type="hand-up" size="50rpx" color="#5756B3"></uni-icons>
-				<view class="text">猜你喜欢</view>
-			</view>
-			<view class="goods">
-				<items v-for="item in classifyList" :key="item.id" :item="item"></items>
-			</view>
-		</view>
+		<guessLike :classifyList="classifyList"></guessLike>
 		<!-- 空白留白 -->
 		 <view class="isend">
 			 <bottom-end ></bottom-end>
@@ -192,22 +184,6 @@ const classifyList = [
 				}
 	        }
 	    }
-	}
-	.guestLike{
-		padding: 50rpx 60rpx 30rpx 60rpx;
-		.title{
-			display: flex;
-			align-items: center;
-			.text{
-				font-size: 36rpx;
-				margin-left: 20rpx;
-			}
-		}
-		.goods{
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: 20rpx;
-		}
 	}
 	:deep(.isend){
 		padding-bottom: 150rpx !important;

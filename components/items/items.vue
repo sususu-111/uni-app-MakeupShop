@@ -1,6 +1,6 @@
 <template>
 <!-- 商品 -->
-<view class="items" hover-class="active" :hover-stay-time="50">
+<view class="items" hover-class="active" :hover-stay-time="50" @click="toGoodsDetail(item.id)">
 	<image :src="item.url" mode="aspectFill"></image>
 	<view class="description">{{item.description}}</view>
 	<view class="price">￥{{item.price}}</view>
@@ -12,6 +12,12 @@
 const props = defineProps({
 	item:Object
 })
+// 点击商品并携带商品id跳转到商品详情页
+const toGoodsDetail = ()=>{
+	uni.navigateTo({
+		url:'/pages/goods-detail/goods-detail?id=1'
+	})
+}
 </script>
 
 <style lang="scss" scoped>		

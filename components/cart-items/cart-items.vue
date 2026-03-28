@@ -1,7 +1,7 @@
 <template>
 <!-- 购物车商品 -->
 <view class="goods-list" :style="{paddingTop:getNavBarHeight()+20+'px'}" v-if="true">
-	<view class="goods" v-for="item in classifyList" :key="item.id" hover-class="active" :hover-stay-time="50">
+	<view class="goods" v-for="item in classifyList" :key="item.id" hover-class="active" :hover-stay-time="50" @click="toGoodsDetail">
 		<view class="left">
 			<image :src="item.url" mode="aspectFill"></image>
 		</view>
@@ -44,6 +44,13 @@ import {getNavBarHeight} from '@/utils/system.js'
 const props = defineProps({
 	classifyList:Array
 })
+
+// 点击商品并携带商品id跳转到商品详情页
+const toGoodsDetail = (id) => {
+	uni.navigateTo({
+		url: '/pages/goods-detail/goods-detail?id=' + id
+	})
+}
 </script>
 
 <style lang="scss">
