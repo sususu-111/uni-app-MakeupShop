@@ -59,12 +59,24 @@
 		<!-- 空白留白 -->
 		<bottom-end></bottom-end>
 		
+		<!-- 返回顶部 -->
+		<back-to-top :show="showBackToTop"></back-to-top>
+		
 	</view>
 </template>
 
 <script setup>
 import {ref} from 'vue'
+import {onPageScroll} from '@dcloudio/uni-app'
 import {getNavBarHeight} from '@/utils/system.js'
+
+// 返回顶部显示状态
+const showBackToTop = ref(false)
+
+// 监听页面滚动
+onPageScroll((e) => {
+	showBackToTop.value = e.scrollTop > 400
+})
 
 // 轮播图相关数据
 const currentIndex = ref(0)

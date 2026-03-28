@@ -1,12 +1,37 @@
 <template>
 <view class="layout">
-	<!-- 返回按钮 -->
-	<view class="toback" :style="{marginTop:getStatusBarHeight()+'px'}" @click="toBack" hover-class="active" :hover-stay-time="50">
-		<uni-icons type="left" size="40rpx" color="#FFF"></uni-icons>
+	<!-- 顶部一体化导航栏 (始终固定，动态切换透明/白色) -->
+	<view class="top-nav-bar" :class="{ 'scrolled': showStickyNav }" :style="{ paddingTop: getStatusBarHeight() + 'px' }">
+		<view class="nav-content" :style="{ height: getTitleBarHeight() + 'px' }">
+			<!-- 左侧返回按钮 (始终显示) -->
+			<view class="left-action" @click="toBack" hover-class="active" :hover-stay-time="50">
+				<uni-icons type="left" size="44rpx" :color="showStickyNav ? '#333' : '#FFF'"></uni-icons>
+			</view>
+			
+			<!-- 中间搜索框 (在滚动后淡入显示) -->
+			<view class="search-box" @click="toSearch" :class="{ 'visible': showStickyNav }" :style="{ marginRight: getSearchRightPadding() }">
+				<uni-icons type="search" size="30rpx" color="#999"></uni-icons>
+				<text class="placeholder">搜索商品...</text>
+			</view>
+		</view>
+		
+		<!-- 导航 Tabs (滚动后显示) -->
+		<view class="nav-tabs" v-if="showStickyNav">
+			<view 
+				class="tab-item" 
+				v-for="(tab, index) in navTabs" 
+				:key="index"
+				:class="{ 'active': activeNavTab === index }"
+				@click="scrollToSection(index)"
+			>
+				{{ tab.name }}
+				<view class="line" v-if="activeNavTab === index"></view>
+			</view>
+		</view>
 	</view>
 	
-	<!-- 商品图片轮播 -->
-	<view class="banner">
+	<!-- 商品图片轮播 (商品锚点) -->
+	<view id="anchor-0" class="banner">
 		<swiper class="swiper" circular @change="onSwiperChange">
 			<swiper-item v-for="(img, index) in productInfo.images" :key="index" @click="previewImage(index, 'banner')">
 				<image :src="img" mode="aspectFill"></image>
@@ -70,8 +95,8 @@
 		</view>
 	</view>
 	
-	<!-- 商品评论预览 -->
-	<view class="comment section">
+	<!-- 商品评论预览 (评价锚点) -->
+	<view id="anchor-1" class="comment section">
 		<view class="titleRow">
 			<text class="title">商品评价(128)</text>
 			<view class="more" hover-class="active" :hover-stay-time="50">
@@ -90,8 +115,8 @@
 		</view>
 	</view>
 	
-	<!-- 更多详情图片展示 -->
-	<view class="more section">
+	<!-- 更多详情图片展示 (详情锚点) -->
+	<view id="anchor-2" class="more section">
 		<view class="titleRow">
 			<text class="title">图文详情</text>
 		</view>
@@ -144,13 +169,119 @@
 		</swiper>
 	</view>
 
+	<!-- 返回顶部 -->
+	<back-to-top :show="showBackToTop" bottom="180"></back-to-top>
+
 </view>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
-import { getStatusBarHeight } from '@/utils/system.js'
+import { ref, onMounted, nextTick } from 'vue'
+import { onLoad, onPageScroll, onReady } from '@dcloudio/uni-app'
+import { getStatusBarHeight, getTitleBarHeight } from '@/utils/system.js'
+
+// 获取胶囊按钮信息 (仅限小程序)
+const getMenuButtonInfo = () => {
+	// #ifdef MP-WEIXIN
+	return uni.getMenuButtonBoundingClientRect()
+	// #endif
+	// #ifndef MP-WEIXIN
+	return null
+	// #endif
+}
+
+const menuButtonInfo = ref(getMenuButtonInfo())
+
+// 计算搜索框右侧间距 (适配小程序胶囊)
+const getSearchRightPadding = () => {
+	if (menuButtonInfo.value) {
+		// 胶囊左侧距离右边缘的距离 = 屏幕宽度 - 胶囊左坐标
+		// 再加上一点额外的间距
+		const sysInfo = uni.getSystemInfoSync()
+		return (sysInfo.windowWidth - menuButtonInfo.value.left + 10) + 'px'
+	}
+	return '0'
+}
+
+// 返回顶部显示状态
+const showBackToTop = ref(false)
+
+// 吸顶导航相关状态
+const showStickyNav = ref(false)
+const activeNavTab = ref(0)
+const navTabs = [
+	{ name: '商品', id: 'anchor-0' },
+	{ name: '评价', id: 'anchor-1' },
+	{ name: '详情', id: 'anchor-2' }
+]
+const anchorTops = ref([0, 0, 0])
+
+// 监听页面滚动
+onPageScroll((e) => {
+	const scrollY = e.scrollTop
+	showBackToTop.value = scrollY > 600
+	
+	// 控制吸顶导航显示 (超过 150 像素开始淡入)
+	showStickyNav.value = scrollY > 150
+
+	// 自动高亮对应的 Tab (动态判断位置，预留导航栏总高度)
+	const offset = getStatusBarHeight() + getTitleBarHeight() + (showStickyNav.value ? 40 : 0)
+	for (let i = anchorTops.value.length - 1; i >= 0; i--) {
+		if (scrollY >= anchorTops.value[i] - offset - 10) { // 额外减去 10px 提高触发灵敏度
+			activeNavTab.value = i
+			break
+		}
+	}
+})
+
+// 获取各个锚点的位置
+const initAnchorTops = () => {
+	nextTick(() => {
+		const query = uni.createSelectorQuery()
+		query.select('#anchor-0').boundingClientRect()
+		query.select('#anchor-1').boundingClientRect()
+		query.select('#anchor-2').boundingClientRect()
+		query.exec(res => {
+			if (res && res.length > 0) {
+				// 获取当前滚动位置，计算绝对顶部位置
+				uni.createSelectorQuery().selectViewport().scrollOffset(viewport => {
+					const currentScrollTop = viewport.scrollTop
+					anchorTops.value = res.map(item => item ? item.top + currentScrollTop : 0)
+				}).exec()
+			}
+		})
+	})
+}
+
+onReady(() => {
+	// 增加延迟，确保图片渲染撑开高度后再计算
+	setTimeout(() => {
+		initAnchorTops()
+	}, 800)
+})
+
+// 滚动到指定区域
+const scrollToSection = (index) => {
+	activeNavTab.value = index
+	if (index === 0) {
+		uni.pageScrollTo({ scrollTop: 0, duration: 300 })
+		return
+	}
+	
+	const offset = getStatusBarHeight() + getTitleBarHeight() + 40 // 导航栏总高度 (状态栏 + 标题栏 + Tabs)
+	uni.pageScrollTo({
+		duration: 300,
+		scrollTop: anchorTops.value[index] - offset + 2 // 稍微偏移 2px 确保高亮准确
+	})
+}
+
+// 跳转搜索 (后续用户完善)
+const toSearch = () => {
+	console.log('跳转搜索页')
+}
+
+
+
 
 // 商品信息
 const productInfo = ref({
@@ -309,21 +440,121 @@ const classifyList = [
 	min-height: 100vh;
 	position: relative;
 
-	.toback {
+	.top-nav-bar {
 		position: fixed;
-		left: 30rpx;
-		z-index: 100;
-		width: 70rpx;
-		height: 70rpx;
-		background-color: rgba(0, 0, 0, 0.3);
-		border-radius: 50%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		transition: background-color 0.2s;
-		&.active {
-			background-color: rgba(0, 0, 0, 0.5);
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 200;
+		transition: all 0.3s ease;
+		background-color: transparent;
+
+		&.scrolled {
+			background-color: #fff;
+			box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
 		}
+
+		.nav-content {
+			display: flex;
+			align-items: center;
+			padding: 0 20rpx;
+			gap: 20rpx;
+
+			.left-action {
+				width: 64rpx;
+				height: 64rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-shrink: 0;
+				border-radius: 50%;
+				transition: all 0.2s;
+				background-color: rgba(0, 0, 0, 0.15); // 透明状态下的微弱蒙层，保证在浅色Banner上可见
+
+				&.active {
+					background-color: rgba(0, 0, 0, 0.3);
+				}
+			}
+
+			.search-box {
+				flex: 1;
+				height: 64rpx;
+				background-color: rgba(255, 255, 255, 0.4); // 增加透明度背景
+				border-radius: 32rpx;
+				display: flex;
+				align-items: center;
+				padding: 0 24rpx;
+				gap: 10rpx;
+				opacity: 0;
+				visibility: hidden;
+				transition: all 0.3s;
+
+				&.visible {
+					opacity: 1;
+					visibility: visible;
+					background-color: #f4f4f4;
+				}
+
+				.placeholder {
+					font-size: 26rpx;
+					color: #999;
+				}
+			}
+		}
+
+		&.scrolled {
+			background-color: #fff;
+			box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+
+			.nav-content {
+				.left-action {
+					background-color: transparent; // 滚动后变白底，移除蒙层
+					&.active {
+						background-color: rgba(0, 0, 0, 0.05);
+					}
+				}
+			}
+		}
+
+		.nav-tabs {
+			height: 40px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 60rpx;
+			border-top: 1rpx solid #f0f0f0;
+			animation: fadeIn 0.3s ease-in-out;
+
+			.tab-item {
+				font-size: 28rpx;
+				color: #666;
+				position: relative;
+				padding: 10rpx 0;
+				transition: all 0.2s;
+
+				&.active {
+					color: $brand-theme-color;
+					font-size: 30rpx;
+					font-weight: bold;
+				}
+
+				.line {
+					position: absolute;
+					bottom: 4rpx;
+					left: 50%;
+					transform: translateX(-50%);
+					width: 40rpx;
+					height: 4rpx;
+					background-color: $brand-theme-color;
+					border-radius: 2rpx;
+				}
+			}
+		}
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
 	}
 
 	.banner {

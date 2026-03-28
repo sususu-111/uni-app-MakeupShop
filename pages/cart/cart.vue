@@ -39,10 +39,24 @@
 		 <view class="isend">
 			 <bottom-end ></bottom-end>
 		 </view>
+		 
+		 <!-- 返回顶部 -->
+		 <back-to-top :show="showBackToTop" bottom="280"></back-to-top>
 	</view>
 </template>
 
 <script setup>
+import {ref} from 'vue'
+import {onPageScroll} from '@dcloudio/uni-app'
+
+// 返回顶部显示状态
+const showBackToTop = ref(false)
+
+// 监听页面滚动
+onPageScroll((e) => {
+	showBackToTop.value = e.scrollTop > 400
+})
+
 // 商品数据
 const classifyList = [
 	{
