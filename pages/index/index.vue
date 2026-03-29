@@ -57,7 +57,7 @@
 		</view>
 		
 		<!-- 空白留白 -->
-		<bottom-end></bottom-end>
+		<bottom-end :isEnd="true" bgColor="#F6F7FF"></bottom-end>
 		
 		<!-- 返回顶部 -->
 		<back-to-top :show="showBackToTop"></back-to-top>

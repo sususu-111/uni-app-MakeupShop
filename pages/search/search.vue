@@ -2,7 +2,7 @@
 	<view class="search-layout">
 		<!-- 顶部搜索栏 -->
 		<view class="search-bar" :style="{ paddingTop: getStatusBarHeight() + 'px' }">
-			<view class="bar-content">
+			<view class="bar-content" :style="{ height: getTitleBarHeight() + 'px', paddingRight: getCapsulePadding() + 'px' }">
 				<view class="back-icon" @click="goBack">
 					<uni-icons type="left" size="24" color="#333"></uni-icons>
 				</view>
@@ -25,7 +25,7 @@
 						@click="clearSearch"
 					></uni-icons>
 				</view>
-				<view class="search-btn" @click="onSearch">搜索</view>
+				<view class="search-btn" @click="onSearch" v-if="!isMPWeixin()">搜索</view>
 			</view>
 		</view>
 
@@ -69,13 +69,13 @@
 		</view>
 		
 		<!-- 底部留白 -->
-		<bottom-end></bottom-end>
+		<bottom-end :isEnd="true" bgColor="#F6F7FF"></bottom-end>
 	</view>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getStatusBarHeight } from '@/utils/system.js'
+import { getStatusBarHeight, getTitleBarHeight, getCapsulePadding, isMPWeixin } from '@/utils/system.js'
 
 const searchText = ref('')
 const historyList = ref([])
@@ -115,7 +115,14 @@ const guessList = [
 ]
 
 const goBack = () => {
-	uni.navigateBack()
+	const pages = getCurrentPages();
+	if (pages.length > 1) {
+		uni.navigateBack()
+	} else {
+		uni.switchTab({
+			url: '/pages/index/index'
+		})
+	}
 }
 
 const clearSearch = () => {
@@ -142,9 +149,8 @@ const onSearch = () => {
 	historyList.value = list
 	uni.setStorageSync('searchHistory', list)
 	
-	uni.showToast({
-		title: '搜索: ' + text,
-		icon: 'none'
+	uni.navigateTo({
+		url: `/pages/search-result/search-result?keyword=${text}`
 	})
 }
 
@@ -193,8 +199,8 @@ onMounted(() => {
 		.bar-content {
 			display: flex;
 			align-items: center;
-			padding: 0 30rpx;
-			height: 88rpx;
+			padding-left: 30rpx;
+			box-sizing: border-box;
 
 			.back-icon {
 				padding-right: 20rpx;

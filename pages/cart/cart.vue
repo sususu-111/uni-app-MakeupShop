@@ -37,7 +37,7 @@
 		<guessLike :classifyList="classifyList"></guessLike>
 		<!-- 空白留白 -->
 		 <view class="isend">
-			 <bottom-end ></bottom-end>
+			 <bottom-end :isEnd="true" bgColor="#F6F7FF"></bottom-end>
 		 </view>
 		 
 		 <!-- 返回顶部 -->
