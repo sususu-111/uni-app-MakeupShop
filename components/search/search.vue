@@ -1,6 +1,6 @@
 <template>
 <view class="search" :style="{marginTop:getNavBarHeight()+'px'}">
-		<navigator url="">
+		<navigator url="/pages/search/search">
 			<view class="left">
 				<uni-icons class="icon" type="search" size="25" color="#5756B3"></uni-icons>
 				<text>搜索</text>
